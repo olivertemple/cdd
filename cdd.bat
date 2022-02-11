@@ -11,6 +11,9 @@ if %1== -h (
         ) else (
             FOR /F "usebackq tokens=3*" %%A IN (`reg query "HKCU\Environment" /v %1`) DO (
                 cd %%A %%B
+                if exist run.bat (
+                    run.bat
+                )
             )
         )
     )

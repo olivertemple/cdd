@@ -17,3 +17,5 @@ Download `cdd.bat`, and either place it in `C:\Windows\System32\` or add the fol
 `cdd -d NAME` will delete the path with the given name.
 
 `cdd NAME` will change the current directory to the path with the given name.
+
+If a `run.bat` file is present in the directory that is being changed to, it will be executed. This will allow you to automatically start the program when you change directories if desired.
