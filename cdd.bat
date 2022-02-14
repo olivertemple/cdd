@@ -1,7 +1,12 @@
 @echo off
 
 if %1== -h (
-    echo "Usage: cdd.bat [-a (add)|-d (delete)] [name] [path]"
+    echo Usage: cdd.bat
+    echo        [name] - change directory to name
+    echo        [name] -r - don't run run.bat in the new directory
+    echo        -a [name] [path] - add a new directory
+    echo        -d [name] - delete a directory
+    echo        -h - show this help dialog
 ) else (
     if %1 == -a (
         setx %2 %3
@@ -11,8 +16,10 @@ if %1== -h (
         ) else (
             FOR /F "usebackq tokens=3*" %%A IN (`reg query "HKCU\Environment" /v %1`) DO (
                 cd %%A %%B
-                if exist run.bat (
-                    run.bat
+                if not "%~2"=="-r" (
+                    if exist run.bat (
+                        run.bat
+                    )
                 )
             )
         )
