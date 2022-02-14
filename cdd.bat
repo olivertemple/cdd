@@ -9,12 +9,12 @@ if %1== -h (
     echo        -h - show this help dialog
 ) else (
     if %1 == -a (
-        setx %2 %3
+        setx cdd%2 %3
     ) else (
         if %1 == -d (
-            reg delete "HKCU\Environment" /v %2 /f
+            reg delete "HKCU\Environment" /v cdd%2 /f
         ) else (
-            FOR /F "usebackq tokens=3*" %%A IN (`reg query "HKCU\Environment" /v %1`) DO (
+            FOR /F "usebackq tokens=3*" %%A IN (`reg query "HKCU\Environment" /v cdd%1`) DO (
                 cd %%A %%B
                 if not "%~2"=="-r" (
                     if exist run.bat (

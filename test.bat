@@ -1,8 +1,3 @@
 @echo off
-FOR /F "usebackq tokens=3*" %%A IN (`reg query "HKCU\Environment"`) DO (
-    ECHO %%A %%B
-    SET myVar=%%A
-    ECHO %myVar:~1%
-)
-@REM SET test=123456789abcdef0
-@REM ECHO %test:~-3%
+SET myVar=cddPath?C:\Users\ollie\
+for /f "tokens=2 delims=?" %%A in ("%myVar%") Do @Echo %%A
