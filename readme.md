@@ -12,9 +12,9 @@ CDD is a simple and easy to use tool that allows you to easily move to a differe
 Download `cdd.bat`, and either place it in `C:\Windows\System32\` or add the folder where it is placed to you `PATH` environment variable. Also place `cddmanage.exe` in the same folder. A file will be created in your AppData folder to store the paths that have been saved.
 
 ## Usage
-`cdd -a NAME PATH` will add a new path that can be used with `cdd NAME`. This will overwrite any existing path with the same name.
+`cdd -a [NAME] [PATH]` will add a new path that can be used with `cdd [NAME]`. This will overwrite any existing path with the same name.
 
-`cdd -d NAME` will delete the path with the given name.
+`cdd -d [NAME]` will delete the path with the given name.
 
 `cdd -l` will list all the paths that are currently saved.
 
