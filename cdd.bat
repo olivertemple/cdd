@@ -9,6 +9,9 @@ if %1== -d (
 if %1== -l (
     goto :list
 )
+if %1== -h (
+    goto :help
+)
 
 for /f "delims=" %%A in ('cddmanage.exe %1') DO (
     cd %%A
@@ -36,6 +39,16 @@ goto :end
 for /f "delims=" %%A in ('cddmanage -l') DO (
     echo %%A
 )
+goto :end
+
+:help
+echo Usage: cdd.bat
+echo        [name] - change directory to name
+echo        [name] -r - don't run cddRun.bat in the new directory
+echo        -a [name] [path] - add a new directory
+echo        -d [name] - delete a directory
+echo        -l - list all directories
+echo        -h - show this help dialog
 goto :end
 
 :end
