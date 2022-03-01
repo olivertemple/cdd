@@ -45,7 +45,9 @@ fn main(){
             full_path.push(additional_path);
             println!("{:?}", full_path);
         }else{
-            println!("{}", root);
+            let mut full_path = PathBuf::from(root);
+            full_path.push(additional_path);
+            println!("{:?}", full_path);
         }
     }
 }
