@@ -3,13 +3,25 @@
 if %1== -a (
     goto :add
 )
+if %1== --add (
+    goto :add
+)
 if %1== -d (
+    goto :delete
+)
+if %1== --delete (
     goto :delete
 )
 if %1== -l (
     goto :list
 )
+if %1== --list (
+    goto :list
+)
 if %1== -h (
+    goto :help
+)
+if %1== --help (
     goto :help
 )
 
@@ -45,10 +57,11 @@ goto :end
 echo Usage: cdd.bat
 echo        [name] - change directory to name
 echo        [name] -r - don't run cddRun.bat in the new directory
-echo        -a [name] [path] - add a new directory
-echo        -d [name] - delete a directory
-echo        -l - list all directories
-echo        -h - show this help dialog
+echo        [name/child] - change directory to name/child
+echo        -a(--add) [name] [path] - add a new directory
+echo        -d(--delete) [name] - delete a directory
+echo        -l(--list) - list all directories
+echo        -h(--help) - show this help dialog
 goto :end
 
 :end

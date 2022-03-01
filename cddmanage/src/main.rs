@@ -1,26 +1,27 @@
 use std::env;
 use std::fs;
 use std::io::prelude::*;
+use std::path::PathBuf;
 
 fn main(){
     let args: Vec<String> = env::args().collect();
     let mut paths = read_paths();
 
     if args[1] == "-a" {
-        let present = paths.iter().any(|s| s.0 == args[2]);
+        let present = paths.iter().any(|s| s.0 == args[2].to_lowercase());
         if !present {
-            let new_path = (args[2].to_string(), args[3].to_string());
+            let new_path = (args[2].to_string().to_lowercase(), args[3].to_string());
             paths.push(new_path);
         } else {
-            let index = paths.iter().position(|s| s.0 == args[2]).unwrap();
+            let index = paths.iter().position(|s| s.0 == args[2].to_lowercase()).unwrap();
             paths[index].1 = args[3].to_string();
         }
         write_paths(paths);
         println!("Successfully added path {} to name {}", args[3], args[2]);
     }else if args[1] == "-d" {
-        let present = paths.iter().any(|s| s.0 == args[2]);
+        let present = paths.iter().any(|s| s.0 == args[2].to_lowercase());
         if present {
-            let index = paths.iter().position(|s| s.0 == args[2]).unwrap();
+            let index = paths.iter().position(|s| s.0 == args[2].to_lowercase()).unwrap();
             paths.remove(index);
         }   
         write_paths(paths);
@@ -30,11 +31,23 @@ fn main(){
             println!("{}: {}", path.0, path.1);
         }
     } else {
-        let present = paths.iter().any(|s| s.0 == args[1]);
+        let splitter = args[1].splitn(2, "/").collect::<Vec<&str>>();
+        let root = splitter[0].to_lowercase();
+        let mut additional_path = "";
+        if splitter.len() > 1 {
+            additional_path = splitter[1];
+        }
+        let present = paths.iter().any(|s| s.0 == root);
         if present {
-            let index = paths.iter().position(|s| s.0 == args[1]).unwrap();
+            let index = paths.iter().position(|s| s.0 == root).unwrap();
             let path = &paths[index].1;
-            println!("{}", path);
+            let mut full_path = PathBuf::from(path);
+            full_path.push(additional_path);
+            println!("{:?}", full_path);
+        }else{
+            let mut full_path = PathBuf::from(root);
+            full_path.push(additional_path);
+            println!("{:?}", full_path);
         }
     }
 }
