@@ -20,6 +20,8 @@ Download `cdd.bat`, and either place it in `C:\Windows\System32\` or add the fol
 
 `cdd NAME [-r]` will change the current directory to the path with the given name. If a `cddRun.bat` file is present in the directory that is being changed to, it will be executed. This will allow you to automatically start the program when you change directories if desired. If the `-r` flag is used, `cddRun.bat` will not be run.
 
+`cdd NAME/child` will change the current directory to the path with the given name, and then enter the child directory (multiple children can be given).
+
 `cdd -h(--help)` will display the help message.
 
 

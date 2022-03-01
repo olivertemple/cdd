@@ -57,6 +57,7 @@ goto :end
 echo Usage: cdd.bat
 echo        [name] - change directory to name
 echo        [name] -r - don't run cddRun.bat in the new directory
+echo        [name/child] - change directory to name/child
 echo        -a(--add) [name] [path] - add a new directory
 echo        -d(--delete) [name] - delete a directory
 echo        -l(--list) - list all directories
