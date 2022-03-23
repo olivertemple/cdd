@@ -3,7 +3,7 @@ use std::fs;
 use std::io::prelude::*;
 use std::path::PathBuf;
 
-fn main(){
+fn main() {
     let args: Vec<String> = env::args().collect();
     let mut paths = read_paths();
 
@@ -13,20 +13,26 @@ fn main(){
             let new_path = (args[2].to_string().to_lowercase(), args[3].to_string());
             paths.push(new_path);
         } else {
-            let index = paths.iter().position(|s| s.0 == args[2].to_lowercase()).unwrap();
+            let index = paths
+                .iter()
+                .position(|s| s.0 == args[2].to_lowercase())
+                .unwrap();
             paths[index].1 = args[3].to_string();
         }
         write_paths(paths);
         println!("Successfully added path {} to name {}", args[3], args[2]);
-    }else if args[1] == "-d" {
+    } else if args[1] == "-d" {
         let present = paths.iter().any(|s| s.0 == args[2].to_lowercase());
         if present {
-            let index = paths.iter().position(|s| s.0 == args[2].to_lowercase()).unwrap();
+            let index = paths
+                .iter()
+                .position(|s| s.0 == args[2].to_lowercase())
+                .unwrap();
             paths.remove(index);
-        }   
+        }
         write_paths(paths);
         println!("Successfully removed {}", args[2]);
-    } else if args[1] == "-l"{
+    } else if args[1] == "-l" {
         for path in paths {
             println!("{}: {}", path.0, path.1);
         }
@@ -44,7 +50,7 @@ fn main(){
             let mut full_path = PathBuf::from(path);
             full_path.push(additional_path);
             println!("{:?}", full_path);
-        }else{
+        } else {
             let mut full_path = PathBuf::from(root);
             full_path.push(additional_path);
             println!("{:?}", full_path);
@@ -52,10 +58,12 @@ fn main(){
     }
 }
 
-fn write_paths(paths: Vec<(String, String)>){
+fn write_paths(paths: Vec<(String, String)>) {
     let app_data_path = env::var("APPDATA").unwrap();
     let file_path = app_data_path + "\\cdd\\data.txt";
-    let data_to_write = paths.into_iter().fold(String::new(), |acc, s| acc + &s.0 + "," + &s.1 + "\n");
+    let data_to_write = paths
+        .into_iter()
+        .fold(String::new(), |acc, s| acc + &s.0 + "," + &s.1 + "\n");
     let mut file = fs::OpenOptions::new()
         .read(true)
         .write(true)
@@ -65,11 +73,12 @@ fn write_paths(paths: Vec<(String, String)>){
         .unwrap();
     file.write(data_to_write.trim().as_bytes()).unwrap();
 }
+
 fn read_paths() -> Vec<(String, String)> {
     let app_data_path = env::var("APPDATA").unwrap();
     let path = app_data_path + "\\cdd\\data.txt";
     let file_path = std::path::Path::new(&path);
-    if !file_path.exists(){
+    if !file_path.exists() {
         fs::create_dir_all(file_path.parent().unwrap()).unwrap();
     }
     let mut file = fs::OpenOptions::new()
@@ -84,9 +93,12 @@ fn read_paths() -> Vec<(String, String)> {
     if file.metadata().unwrap().len() == 0 {
         return Vec::new();
     }
-    let items: Vec<(String, String)> = contents.split("\n").map(|s| {
-        let (a, b) = s.trim().split_at(s.find(',').unwrap());
-        (a.to_string(), b.trim_start_matches(',').to_string())
-    }).collect();
+    let items: Vec<(String, String)> = contents
+        .split("\n")
+        .map(|s| {
+            let (a, b) = s.trim().split_at(s.find(',').unwrap());
+            (a.to_string(), b.trim_start_matches(',').to_string())
+        })
+        .collect();
     items
 }
